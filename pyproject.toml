@@ -1,0 +1,38 @@
+[project]
+name = "lotus-voice"
+version = "0.1.0"
+description = "AI Voice Generation Hub - Multi-backend TTS, ancient language audio, audiobook production"
+requires-python = ">=3.10"
+dependencies = [
+    "flask>=3.0",
+    "flask-cors>=4.0",
+    "python-dotenv>=1.0",
+    "pydub>=0.25",
+    "mutagen>=1.47",
+]
+
+[project.optional-dependencies]
+bark = ["bark>=0.1"]
+edge-tts = ["edge-tts>=6.1"]
+elevenlabs = ["elevenlabs>=1.0"]
+xtts = ["TTS>=0.22"]
+all = [
+    "bark>=0.1",
+    "edge-tts>=6.1",
+    "elevenlabs>=1.0",
+    "TTS>=0.22",
+]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,88 @@
+{
+  "voices": [
+    {
+      "voice_id": "narrator_1",
+      "name": "Classic Narrator",
+      "gender": "male",
+      "archetype": "narrator_authoritative",
+      "description": "Deep, authoritative narrator voice",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_6",
+      "characteristics": {},
+      "tags": ["narrator", "audiobook", "authoritative"]
+    },
+    {
+      "voice_id": "narrator_2",
+      "name": "Warm Narrator",
+      "gender": "female",
+      "archetype": "narrator_warm",
+      "description": "Warm, engaging narrator voice",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_0",
+      "characteristics": {},
+      "tags": ["narrator", "audiobook", "warm"]
+    },
+    {
+      "voice_id": "gilgamesh",
+      "name": "Gilgamesh",
+      "gender": "male",
+      "archetype": "king_epic",
+      "description": "King of Uruk - powerful, commanding, seeking immortality",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_5",
+      "characteristics": {"pitch": "low", "energy": "high", "authority": "commanding"},
+      "tags": ["character", "ancient", "hero", "king"]
+    },
+    {
+      "voice_id": "enkidu",
+      "name": "Enkidu",
+      "gender": "male",
+      "archetype": "warrior_wild",
+      "description": "Wild man of the steppe - raw, untamed, loyal",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_9",
+      "characteristics": {"pitch": "deep", "energy": "intense", "quality": "rough"},
+      "tags": ["character", "ancient", "warrior", "wild"]
+    },
+    {
+      "voice_id": "shamhat",
+      "name": "Shamhat",
+      "gender": "female",
+      "archetype": "priestess",
+      "description": "Temple priestess - wise, sensual, civilizing",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_0",
+      "characteristics": {"pitch": "warm", "energy": "measured", "quality": "smooth"},
+      "tags": ["character", "ancient", "priestess"]
+    },
+    {
+      "voice_id": "ishtar",
+      "name": "Ishtar",
+      "gender": "female",
+      "archetype": "deity",
+      "description": "Goddess of love and war - imperious, passionate, dangerous",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_2",
+      "characteristics": {"pitch": "variable", "energy": "high", "quality": "commanding"},
+      "tags": ["character", "ancient", "deity", "goddess"]
+    },
+    {
+      "voice_id": "utnapishtim",
+      "name": "Utnapishtim",
+      "gender": "male",
+      "archetype": "elder_wise",
+      "description": "The immortal sage - ancient, measured, knowing",
+      "audio_sample_path": null,
+      "backend": "bark",
+      "backend_voice_id": "v2/en_speaker_7",
+      "characteristics": {"pitch": "low", "energy": "calm", "quality": "aged"},
+      "tags": ["character", "ancient", "elder", "wise"]
+    }
+  ]
+}

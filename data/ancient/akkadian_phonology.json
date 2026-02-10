@@ -1,0 +1,48 @@
+{
+  "language": "akkadian",
+  "source": "Huehnergard (2011) A Grammar of Akkadian",
+  "vowels": {
+    "a": {"ipa": "a", "description": "open central unrounded"},
+    "e": {"ipa": "e", "description": "mid front unrounded"},
+    "i": {"ipa": "i", "description": "close front unrounded"},
+    "u": {"ipa": "u", "description": "close back rounded"}
+  },
+  "long_vowels": {
+    "ā": {"ipa": "aː"},
+    "ē": {"ipa": "eː"},
+    "ī": {"ipa": "iː"},
+    "ū": {"ipa": "uː"}
+  },
+  "consonants": {
+    "b": {"ipa": "b", "place": "bilabial", "manner": "stop"},
+    "d": {"ipa": "d", "place": "dental", "manner": "stop"},
+    "g": {"ipa": "ɡ", "place": "velar", "manner": "stop"},
+    "k": {"ipa": "k", "place": "velar", "manner": "stop"},
+    "l": {"ipa": "l", "place": "alveolar", "manner": "lateral"},
+    "m": {"ipa": "m", "place": "bilabial", "manner": "nasal"},
+    "n": {"ipa": "n", "place": "alveolar", "manner": "nasal"},
+    "p": {"ipa": "p", "place": "bilabial", "manner": "stop"},
+    "q": {"ipa": "kʼ", "place": "uvular", "manner": "stop", "note": "emphatic/ejective"},
+    "r": {"ipa": "r", "place": "alveolar", "manner": "trill"},
+    "s": {"ipa": "s", "place": "alveolar", "manner": "fricative"},
+    "ṣ": {"ipa": "sʼ", "place": "alveolar", "manner": "fricative", "note": "emphatic/ejective"},
+    "š": {"ipa": "ʃ", "place": "postalveolar", "manner": "fricative"},
+    "t": {"ipa": "t", "place": "dental", "manner": "stop"},
+    "ṭ": {"ipa": "tʼ", "place": "dental", "manner": "stop", "note": "emphatic/ejective"},
+    "w": {"ipa": "w", "place": "labial-velar", "manner": "approximant"},
+    "y": {"ipa": "j", "place": "palatal", "manner": "approximant"},
+    "z": {"ipa": "z", "place": "alveolar", "manner": "fricative"},
+    "ḫ": {"ipa": "x", "place": "velar", "manner": "fricative"},
+    "ʾ": {"ipa": "ʔ", "place": "glottal", "manner": "stop", "note": "aleph/glottal stop"}
+  },
+  "emphatic_consonants": {
+    "note": "Akkadian has three emphatic consonants, realized as ejectives",
+    "ṭ": "tʼ",
+    "ṣ": "sʼ",
+    "q": "kʼ"
+  },
+  "syllable_structure": {
+    "types": ["CV", "CVC", "CVCC"],
+    "note": "More complex syllables than Sumerian"
+  }
+}

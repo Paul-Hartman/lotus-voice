@@ -1,0 +1,37 @@
+{
+  "language": "sumerian",
+  "source": "Jagersma (2010) A Descriptive Grammar of Sumerian",
+  "vowels": {
+    "a": {"ipa": "a", "description": "open central unrounded"},
+    "e": {"ipa": "e", "description": "mid front unrounded"},
+    "i": {"ipa": "i", "description": "close front unrounded"},
+    "u": {"ipa": "u", "description": "close back rounded"}
+  },
+  "long_vowels": {
+    "ā": {"ipa": "aː"},
+    "ē": {"ipa": "eː"},
+    "ī": {"ipa": "iː"},
+    "ū": {"ipa": "uː"}
+  },
+  "consonants": {
+    "b": {"ipa": "b", "place": "bilabial", "manner": "stop", "voicing": "voiced"},
+    "d": {"ipa": "d", "place": "alveolar", "manner": "stop", "voicing": "voiced"},
+    "g": {"ipa": "ɡ", "place": "velar", "manner": "stop", "voicing": "voiced"},
+    "ĝ": {"ipa": "ŋ", "place": "velar", "manner": "nasal", "note": "also written ŋ"},
+    "h": {"ipa": "x", "place": "velar", "manner": "fricative", "voicing": "voiceless", "note": "also written ḫ"},
+    "k": {"ipa": "k", "place": "velar", "manner": "stop", "voicing": "voiceless"},
+    "l": {"ipa": "l", "place": "alveolar", "manner": "lateral"},
+    "m": {"ipa": "m", "place": "bilabial", "manner": "nasal"},
+    "n": {"ipa": "n", "place": "alveolar", "manner": "nasal"},
+    "p": {"ipa": "p", "place": "bilabial", "manner": "stop", "voicing": "voiceless"},
+    "r": {"ipa": "r", "place": "alveolar", "manner": "trill"},
+    "s": {"ipa": "s", "place": "alveolar", "manner": "fricative", "voicing": "voiceless"},
+    "š": {"ipa": "ʃ", "place": "postalveolar", "manner": "fricative", "voicing": "voiceless"},
+    "t": {"ipa": "t", "place": "alveolar", "manner": "stop", "voicing": "voiceless"},
+    "z": {"ipa": "z", "place": "alveolar", "manner": "fricative", "voicing": "voiced"}
+  },
+  "syllable_structure": {
+    "preferred": ["CV", "CVC", "VC"],
+    "note": "Sumerian strongly prefers open syllables (CV)"
+  }
+}

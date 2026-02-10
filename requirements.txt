@@ -1,0 +1,17 @@
+# Core
+flask>=3.0
+flask-cors>=4.0
+python-dotenv>=1.0
+pydub>=0.25
+mutagen>=1.47
+
+# TTS Backends (install as needed)
+# pip install bark           # Bark - free, open source, emotional
+# pip install edge-tts       # Edge TTS - free, high quality
+# pip install elevenlabs     # ElevenLabs - commercial, premium
+# pip install TTS            # Coqui TTS / XTTS v2 - voice cloning
+# brew install espeak-ng     # eSpeak-NG - ancient language support
+
+# Dev
+pytest>=7.0
+ruff>=0.4
