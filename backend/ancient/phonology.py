@@ -17,6 +17,10 @@ from typing import Dict, Optional
 logger = logging.getLogger(__name__)
 
 # Sumerian phoneme inventory (Jagersma 2010)
+#
+# Standard transliteration uses: š, ĝ, ḫ
+# ETCSL (etcsl.orinst.ox.ac.uk) uses ASCII: c=š, j=ĝ, h=ḫ
+# Both conventions are mapped below for interoperability.
 SUMERIAN_PHONOLOGY = {
     "vowels": {
         "a": "a",    # open central
@@ -33,10 +37,11 @@ SUMERIAN_PHONOLOGY = {
         "b": "b",
         "d": "d",
         "g": "ɡ",
-        "ĝ": "ŋ",    # velar nasal (NG sound)
+        "ĝ": "ŋ",    # velar nasal (NG in 'sing')
         "ŋ": "ŋ",    # alternate notation
-        "h": "x",    # voiceless velar fricative
-        "ḫ": "x",    # alternate notation
+        "j": "ŋ",    # ETCSL convention: j = ĝ = [ŋ]
+        "h": "x",    # voiceless velar fricative (as in German 'Bach')
+        "ḫ": "x",    # standard transliteration notation
         "k": "k",
         "l": "l",
         "m": "m",
@@ -44,6 +49,7 @@ SUMERIAN_PHONOLOGY = {
         "p": "p",
         "r": "r",    # likely alveolar trill
         "s": "s",
+        "c": "ʃ",    # ETCSL convention: c = š = [ʃ]
         "š": "ʃ",    # voiceless postalveolar fricative
         "sz": "ʃ",   # ASCII transliteration of š
         "t": "t",
