@@ -332,6 +332,75 @@ class VocalTractSynthesizer:
 
         return audio, states
 
+    def _synthesize_voiceless_stop(
+        self,
+        phone: str,
+        area_function: np.ndarray,
+        target: Optional[ArticulatorTarget],
+        duration_sec: float,
+        f0: float,
+        aspiration: float,
+    ) -> Tuple[np.ndarray, List[VocalTractState]]:
+        """Synthesize a voiceless stop: silence → burst → optional aspiration.
+
+        3-phase model:
+          Phase 1 (60%): Closure — silence
+          Phase 2 (15%): Burst — impulse through tract filter
+          Phase 3 (25%): Aspiration/VOT — noise through tract
+        """
+        from vocaltract.glottal_source import generate_burst_impulse
+
+        num_samples = int(duration_sec * self.sample_rate)
+        closure_end = int(num_samples * 0.60)
+        burst_end = int(num_samples * 0.75)
+
+        audio = np.zeros(num_samples, dtype=np.float64)
+
+        # Set tract shape
+        self.tube.set_area_function(area_function)
+        self.tube.reset()
+        self.radiation.reset()
+
+        # Phase 2: Burst — impulse excitation through the tract
+        burst_len = burst_end - closure_end
+        if burst_len > 0:
+            burst = generate_burst_impulse(burst_len, pressure_factor=1.2,
+                                           sample_rate=self.sample_rate)
+            burst_out = self.tube.process_block(burst)
+            audio[closure_end:burst_end] = self.radiation.process_block(burst_out)
+
+        # Phase 3: Aspiration noise through the tract (VOT)
+        vot_len = num_samples - burst_end
+        if vot_len > 0:
+            asp_level = max(aspiration, 0.3)  # Stops always have some aspiration
+            noise = np.random.randn(vot_len) * asp_level * 0.15
+            vot_out = self.tube.process_block(noise)
+            audio[burst_end:] = self.radiation.process_block(vot_out)
+
+        # Normalize
+        peak = np.max(np.abs(audio))
+        if peak > 0:
+            audio = audio / peak * 0.8
+
+        # Fade edges
+        fade = min(int(0.005 * self.sample_rate), num_samples // 4)
+        if fade > 0:
+            audio[-fade:] *= np.linspace(1, 0, fade)
+
+        formants = self.tube.estimate_formants()
+        states = [VocalTractState(
+            time_sec=0.0, phone=phone, phone_progress=0.0,
+            glottal=GlottalState(f0=f0, Rd=0.3, phonation_type="voiceless"),
+            articulators=ArticulatorState(),
+            tube=TubeState(num_sections=self.num_sections,
+                          area_function_cm2=area_function.tolist()),
+            subglottal=SubglottalState(), output_sample=0.0,
+        )]
+        for s in states:
+            s.formants_hz = formants
+
+        return audio, states
+
     # ── Standard pulmonic synthesis ───────────────────────────
 
     def synthesize_phone(
@@ -401,8 +470,16 @@ class VocalTractSynthesizer:
             secondary_noise_section = raw_data.get("secondary_noise_section")
             secondary_noise_amplitude = raw_data.get("secondary_noise_amplitude", 0.0)
 
-        # Handle voiceless sounds — use noise excitation only
+        # Handle voiceless sounds
         is_voiceless = phonation_type == "voiceless"
+        manner = self.ipa_mapper.get_manner(phone) if target else None
+        is_stop = manner == "stop"
+
+        # Voiceless stops get a burst-release model instead of silence
+        if is_voiceless and is_stop:
+            return self._synthesize_voiceless_stop(
+                phone, area_function, target, duration_sec, phone_f0, phone_aspiration,
+            )
 
         # Set source parameters
         if not is_voiceless:

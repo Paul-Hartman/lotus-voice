@@ -80,9 +80,10 @@ class ESpeakBackend(TTSBackendBase):
                 "-w", str(output_path),
             ]
 
-            if is_ipa:
-                # IPA input mode
-                cmd.append("--ipa")
+            # Note: --ipa is an OUTPUT flag (prints IPA to stdout).
+            # For IPA input, text should be wrapped in [[ ]] using
+            # eSpeak's own phoneme notation, not raw IPA Unicode.
+            # The synthesize_ipa() method handles this conversion.
 
             cmd.append(text)
 
@@ -102,13 +103,62 @@ class ESpeakBackend(TTSBackendBase):
     def synthesize_ipa(self, ipa_text: str, output_path: Path, **kwargs) -> bool:
         """Synthesize directly from IPA notation.
 
+        eSpeak uses its own phoneme notation (e.g. h@l'oU for "hello"),
+        NOT standard IPA Unicode. This method converts common IPA symbols
+        to eSpeak's Kirshenbaum-like notation before synthesis.
+
         Args:
             ipa_text: IPA string (e.g. "ʃa naqba iːmuru")
             output_path: Output WAV path
         """
-        # eSpeak accepts IPA in double-bracket notation
-        bracketed = f"[[{ipa_text}]]"
-        return self.synthesize(bracketed, output_path, ipa=True, **kwargs)
+        espeak_phonemes = self._ipa_to_espeak(ipa_text)
+        bracketed = f"[[{espeak_phonemes}]]"
+        return self.synthesize(bracketed, output_path, **kwargs)
+
+    @staticmethod
+    def _ipa_to_espeak(ipa: str) -> str:
+        """Convert IPA Unicode to eSpeak phoneme notation.
+
+        This is a best-effort mapping. eSpeak's phoneme set is English-centric
+        and cannot represent clicks, ejectives, implosives, or tones.
+        """
+        # IPA → eSpeak phoneme mapping (English voice)
+        table = {
+            # Vowels
+            "i": "i:", "ɪ": "I", "e": "e", "ɛ": "E", "æ": "a",
+            "ɑ": "A:", "ɒ": "0", "ɔ": "O:", "ʊ": "U", "u": "u:",
+            "ʌ": "V", "ə": "@", "ɜ": "3:", "ɝ": "3:",
+            # Consonants
+            "p": "p", "b": "b", "t": "t", "d": "d", "k": "k", "ɡ": "g",
+            "g": "g", "f": "f", "v": "v", "θ": "T", "ð": "D",
+            "s": "s", "z": "z", "ʃ": "S", "ʒ": "Z", "h": "h",
+            "m": "m", "n": "n", "ŋ": "N", "l": "l", "r": "r",
+            "ɹ": "r", "w": "w", "j": "j", "ɾ": "t#",
+            # Affricates
+            "tʃ": "tS", "dʒ": "dZ", "ts": "ts",
+            # Diacritics/modifiers
+            "ː": ":", "ˈ": "'", "ˌ": ",",
+            # Rhotacized
+            "˞": "r",
+        }
+        result = []
+        i = 0
+        text = ipa
+        while i < len(text):
+            # Try 2-char sequences first
+            if i + 1 < len(text) and text[i:i+2] in table:
+                result.append(table[text[i:i+2]])
+                i += 2
+            elif text[i] in table:
+                result.append(table[text[i]])
+                i += 1
+            elif text[i] == " ":
+                result.append(" ")
+                i += 1
+            else:
+                # Pass through unknown symbols (eSpeak will ignore them)
+                i += 1
+        return "".join(result)
 
     def list_voices(self) -> List[Dict]:
         if not self._available:

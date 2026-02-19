@@ -135,6 +135,18 @@ class IPAToArticulation:
         else:
             logger.warning(f"Consonant targets not found: {consonant_path}")
 
+        # Load click targets (separate file, merged into consonants)
+        click_path = _DATA_DIR / "click_targets.json"
+        if click_path.exists():
+            with open(click_path) as f:
+                click_data = json.load(f)
+            clicks = click_data.get("clicks", {})
+            for key, val in clicks.items():
+                val["manner"] = "click"
+                val["voicing"] = val.get("accompaniment") == "voiced"
+                self._consonant_targets[key] = val
+            logger.info(f"Loaded {len(clicks)} click targets")
+
         self._loaded = True
 
     def get_target(self, phone: str) -> Optional[ArticulatorTarget]:
