@@ -25,7 +25,13 @@ import numpy as np
 from vocaltract.area_function import articulators_to_area_function, find_constriction
 from vocaltract.articulators import ArticulatorTarget
 from vocaltract.glottal_source import GlottalSource
-from vocaltract.ipa_to_articulation import IPAToArticulation, parse_ipa_to_phones
+from vocaltract.ipa_to_articulation import IPAToArticulation, PhoneToken, parse_ipa_to_phones
+from vocaltract.non_pulmonic import (
+    AirstreamType,
+    ClickSynthesizer,
+    EjectiveSynthesizer,
+    ImplosiveSynthesizer,
+)
 from vocaltract.nasal_tract import COUPLING_SECTION, NasalTract
 from vocaltract.radiation import RadiationFilter
 from vocaltract.state import (
@@ -86,9 +92,15 @@ class VocalTractSynthesizer:
         # Articulatory pathway (Phase 2)
         self.ipa_mapper = IPAToArticulation()
 
+        # Non-pulmonic synthesizers
+        self._ejective = EjectiveSynthesizer(sample_rate=sample_rate)
+        self._implosive = ImplosiveSynthesizer(sample_rate=sample_rate)
+        self._click = ClickSynthesizer(sample_rate=sample_rate)
+
         # Presets (Phase 1 fallback)
         self._presets = _load_presets()
         self._vowel_presets = self._presets.get("vowels", {})
+        self._epiglottal_presets = self._presets.get("epiglottals", {})
 
         # Default voice parameters
         self._f0 = DEFAULT_F0
@@ -158,7 +170,169 @@ class VocalTractSynthesizer:
             neutral = self._presets.get("neutral", {})
             if "areas" in neutral:
                 return np.array(neutral["areas"], dtype=np.float64)
+        # Epiglottal presets (PCA model can't reach this deep)
+        if phone in self._epiglottal_presets:
+            return np.array(self._epiglottal_presets[phone]["areas"], dtype=np.float64)
+        for key, preset in self._epiglottal_presets.items():
+            if preset.get("ipa") == phone:
+                return np.array(preset["areas"], dtype=np.float64)
         return None
+
+    # ── Airstream dispatch ──────────────────────────────────────
+
+    # Known click base symbols
+    _CLICK_BASES = {"ʘ", "ǀ", "ǃ", "ǂ", "ǁ"}
+
+    # Known implosive symbols
+    _IMPLOSIVE_PHONES = {"ɓ", "ɗ", "ɠ", "ʄ", "ᶑ"}
+
+    def _classify_airstream(
+        self, phone: str, target: Optional[ArticulatorTarget]
+    ) -> AirstreamType:
+        """Determine the airstream mechanism for a phone.
+
+        Checks (in order):
+        1. Explicit airstream field on the target
+        2. Phonation type == "ejective"
+        3. Phone symbol in known click/implosive sets
+        """
+        if target is not None and target.airstream != "pulmonic_egressive":
+            try:
+                return AirstreamType(target.airstream)
+            except ValueError:
+                pass
+
+        if target is not None and target.phonation_type == "ejective":
+            return AirstreamType.GLOTTALIC_EGRESSIVE
+
+        # Check by symbol
+        base = phone.rstrip("ʼ")
+        if any(c in self._CLICK_BASES for c in phone):
+            return AirstreamType.VELARIC_INGRESSIVE
+        if base in self._IMPLOSIVE_PHONES:
+            return AirstreamType.GLOTTALIC_INGRESSIVE
+
+        return AirstreamType.PULMONIC_EGRESSIVE
+
+    def _synthesize_non_pulmonic(
+        self,
+        phone: str,
+        airstream: AirstreamType,
+        area_function: np.ndarray,
+        target: Optional[ArticulatorTarget],
+        duration_sec: float,
+        f0: float,
+        Rd: float,
+    ) -> Tuple[np.ndarray, List[VocalTractState]]:
+        """Dispatch to the appropriate non-pulmonic synthesizer."""
+        constriction = find_constriction(area_function)
+        constriction_section = constriction.section if constriction else 34
+
+        if airstream == AirstreamType.GLOTTALIC_EGRESSIVE:
+            pressure = 1.5
+            larynx_h = target.larynx_height if target else 1.0
+            audio = self._ejective.synthesize(
+                tube_model=self.tube,
+                radiation_filter=self.radiation,
+                area_function=area_function,
+                constriction_section=constriction_section,
+                duration_sec=duration_sec,
+                pressure_factor=pressure,
+                larynx_height=larynx_h,
+            )
+        elif airstream == AirstreamType.GLOTTALIC_INGRESSIVE:
+            audio = self._implosive.synthesize(
+                tube_model=self.tube,
+                radiation_filter=self.radiation,
+                glottal_source=self.source,
+                area_function=area_function,
+                duration_sec=duration_sec,
+                base_f0=f0,
+            )
+        elif airstream == AirstreamType.VELARIC_INGRESSIVE:
+            # Determine click type from phone symbol
+            click_type = "dental"  # default
+            click_map = {"ʘ": "bilabial", "ǀ": "dental", "ǃ": "alveolar",
+                         "ǂ": "palatal", "ǁ": "lateral"}
+            for sym, ctype in click_map.items():
+                if sym in phone:
+                    click_type = ctype
+                    break
+            audio = self._click.synthesize(
+                tube_model=self.tube,
+                radiation_filter=self.radiation,
+                click_type=click_type,
+                duration_sec=duration_sec,
+            )
+        else:
+            # Fallback — should not reach here
+            audio = np.zeros(int(duration_sec * self.sample_rate), dtype=np.float64)
+
+        # Normalize
+        peak = np.max(np.abs(audio))
+        if peak > 0:
+            audio = audio / peak * 0.8
+
+        # Minimal state snapshot
+        states = [VocalTractState(
+            time_sec=0.0,
+            phone=phone,
+            phone_progress=0.0,
+            glottal=GlottalState(f0=f0, Rd=Rd, phonation_type=airstream.value),
+            articulators=ArticulatorState(),
+            tube=TubeState(
+                num_sections=self.num_sections,
+                area_function_cm2=area_function.tolist(),
+            ),
+            subglottal=SubglottalState(),
+            output_sample=0.0,
+        )]
+
+        return audio, states
+
+    def _synthesize_prenasalized(
+        self,
+        phone: str,
+        area_function: np.ndarray,
+        target: ArticulatorTarget,
+        duration_sec: float,
+        f0: float,
+        Rd: float,
+    ) -> Tuple[np.ndarray, List[VocalTractState]]:
+        """Synthesize a prenasalized consonant as two phases.
+
+        Phase 1 (30%): Nasal onset — velum open, voiced nasal murmur
+        Phase 2 (70%): Oral release — velum closed, normal stop release
+        """
+        nasal_dur = duration_sec * 0.3
+        oral_dur = duration_sec * 0.7
+
+        # Phase 1: Nasal onset (voiced, velum open)
+        nasal_audio, nasal_states = self.synthesize_phone(
+            phone="n",  # Use generic nasal for onset
+            duration_sec=nasal_dur,
+            f0=f0,
+            Rd=Rd,
+        )
+
+        # Phase 2: Oral release (velum closed, original articulation)
+        base, _ = self.ipa_mapper._strip_diacritics(phone)
+        oral_audio, oral_states = self.synthesize_phone(
+            base,
+            duration_sec=oral_dur,
+            f0=f0,
+            Rd=Rd,
+        )
+
+        # Concatenate
+        audio = np.concatenate([nasal_audio, oral_audio])
+        states = nasal_states + oral_states
+        for s in states:
+            s.phone = phone
+
+        return audio, states
+
+    # ── Standard pulmonic synthesis ───────────────────────────
 
     def synthesize_phone(
         self,
@@ -193,11 +367,39 @@ class VocalTractSynthesizer:
         # Determine glottal parameters from target (or defaults)
         phone_f0 = f0 or (target.f0 if target and target.f0 else self._f0)
         phone_Rd = Rd or (target.Rd if target and target.Rd else self._Rd)
+
+        # Non-pulmonic airstream dispatch
+        airstream = self._classify_airstream(phone, target)
+        if airstream != AirstreamType.PULMONIC_EGRESSIVE:
+            return self._synthesize_non_pulmonic(
+                phone, airstream, area_function, target,
+                duration_sec, phone_f0, phone_Rd,
+            )
+
+        # Prenasalized consonants: 30% nasal onset → 70% oral release
+        if target is not None and target.velum >= 0.7:
+            base, diacritics = self.ipa_mapper._strip_diacritics(phone)
+            if "prenasalized" in diacritics:
+                return self._synthesize_prenasalized(
+                    phone, area_function, target, duration_sec, phone_f0, phone_Rd,
+                )
+
         phone_aspiration = aspiration or (target.aspiration if target else 0.0)
         phonation_type = target.phonation_type if target else "modal"
         noise_section = target.noise_source_section if target else None
         noise_amplitude = target.noise_amplitude if target else 0.0
         velum = target.velum if target else 0.0
+
+        # Secondary noise source (for dual-source frication, e.g. ɧ)
+        secondary_noise_section = None
+        secondary_noise_amplitude = 0.0
+        if target is not None:
+            # Check for secondary noise in the raw consonant data
+            self.ipa_mapper._ensure_loaded()
+            base, _ = self.ipa_mapper._strip_diacritics(phone)
+            raw_data = self.ipa_mapper._consonant_targets.get(base, {})
+            secondary_noise_section = raw_data.get("secondary_noise_section")
+            secondary_noise_amplitude = raw_data.get("secondary_noise_amplitude", 0.0)
 
         # Handle voiceless sounds — use noise excitation only
         is_voiceless = phonation_type == "voiceless"
@@ -262,9 +464,12 @@ class VocalTractSynthesizer:
             # Add fricative noise at constriction point
             if noise_section is not None and noise_amplitude > 0:
                 noise = np.random.randn(n) * noise_amplitude * 0.3
-                # Inject noise at the constriction section
-                # (simplified: add to source with spectral shaping)
                 source_samples = source_samples + noise
+
+            # Add secondary fricative noise (dual-source, e.g. ɧ)
+            if secondary_noise_section is not None and secondary_noise_amplitude > 0:
+                noise2 = np.random.randn(n) * secondary_noise_amplitude * 0.3
+                source_samples = source_samples + noise2
 
             if use_nasal:
                 # Sample-by-sample for nasal coupling
@@ -408,43 +613,92 @@ class VocalTractSynthesizer:
         Returns:
             Tuple of (audio, states)
         """
-        # Use the improved IPA parser
+        # Use the improved IPA parser (returns PhoneToken objects)
         raw_phones = parse_ipa_to_phones(ipa_string)
 
         phones = []
         durations = []
+        tone_targets = []    # Parallel list: tone chao levels or None
+        stress_levels = []   # Parallel list: 0=none, 1=primary, 2=secondary
 
         for raw in raw_phones:
             if raw == " ":
                 phones.append("_silence")
                 durations.append(0.05)
-            elif raw.endswith("ː"):
-                phones.append(raw.rstrip("ː"))
-                durations.append(phone_duration * long_vowel_multiplier)
+                tone_targets.append(None)
+                stress_levels.append(0)
+                continue
+
+            # Extract phone string, tone, and stress from PhoneToken
+            stress = 0
+            if isinstance(raw, PhoneToken):
+                phone_str = raw.phone
+                tone = raw.tone
+                is_long = raw.is_long
+                stress = raw.stress
             else:
-                phones.append(raw)
-                # Shorter duration for stops and taps
-                manner = self.ipa_mapper.get_manner(raw)
+                phone_str = str(raw)
+                tone = None
+                is_long = phone_str.endswith("ː")
+                if is_long:
+                    phone_str = phone_str.rstrip("ː")
+
+            if is_long:
+                dur = phone_duration * long_vowel_multiplier
+            else:
+                # Duration by manner
+                manner = self.ipa_mapper.get_manner(phone_str)
                 if manner == "stop":
-                    durations.append(0.08)
+                    dur = 0.08
                 elif manner == "tap":
-                    durations.append(0.04)
+                    dur = 0.04
                 elif manner == "affricate":
-                    durations.append(0.12)
+                    dur = 0.12
                 else:
-                    durations.append(phone_duration)
+                    dur = phone_duration
+
+            # Stress modifications
+            if stress == 1:      # Primary stress (ˈ)
+                dur *= 1.2       # +20% duration
+            elif stress == 2:    # Secondary stress (ˌ)
+                dur *= 1.1       # +10% duration
+
+            phones.append(phone_str)
+            durations.append(dur)
+            tone_targets.append(tone)
+            stress_levels.append(stress)
 
         # Synthesize
         all_audio = []
         all_states = []
 
-        for phone, dur in zip(phones, durations):
+        for i, (phone, dur) in enumerate(zip(phones, durations)):
             if phone == "_silence":
                 silence = np.zeros(int(dur * self.sample_rate), dtype=np.float64)
                 all_audio.append(silence)
             else:
+                # If tone target exists, compute f0 from tone
+                phone_f0 = f0
+                tone = tone_targets[i] if i < len(tone_targets) else None
+                if tone is not None:
+                    from vocaltract.tone import chao_to_f0
+                    base = f0 or self._f0
+                    tone_f0 = chao_to_f0(tone, base, dur, self.sample_rate)
+                    phone_f0 = float(np.mean(tone_f0))
+
+                # Apply stress modifications to f0 and Rd
+                phone_Rd = Rd
+                stress = stress_levels[i] if i < len(stress_levels) else 0
+                if stress == 1:   # Primary stress
+                    base_f0 = phone_f0 or f0 or self._f0
+                    phone_f0 = base_f0 * 1.1  # +10% f0 peak
+                    phone_Rd = (Rd or self._Rd) * 0.9  # Slightly pressed
+                elif stress == 2:  # Secondary stress
+                    base_f0 = phone_f0 or f0 or self._f0
+                    phone_f0 = base_f0 * 1.05  # +5% f0
+
                 audio, states = self.synthesize_phone(
-                    phone, duration_sec=dur, f0=f0, Rd=Rd
+                    phone, duration_sec=dur, f0=phone_f0, Rd=phone_Rd
                 )
                 all_audio.append(audio)
                 all_states.extend(states)

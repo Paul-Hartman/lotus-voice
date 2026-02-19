@@ -267,6 +267,34 @@ class PhonationController:
 
         return f0_mod
 
+    def apply_tone(
+        self,
+        f0: np.ndarray,
+        tone_contour: np.ndarray,
+        weight: float = 0.8,
+    ) -> np.ndarray:
+        """Layer a lexical tone contour onto an f0 array.
+
+        Blends the tone target with the existing f0 (which may include
+        intonation and emotion). The tone layer takes priority with
+        the given weight.
+
+        Args:
+            f0: Base f0 contour (with intonation already applied)
+            tone_contour: Target f0 from tone system (same length)
+            weight: How strongly tone overrides intonation (0.0-1.0)
+
+        Returns:
+            Modified f0 contour
+        """
+        if len(tone_contour) != len(f0):
+            # Resample tone to match f0 length
+            x_old = np.linspace(0, 1, len(tone_contour))
+            x_new = np.linspace(0, 1, len(f0))
+            tone_contour = np.interp(x_new, x_old, tone_contour)
+
+        return f0 * (1.0 - weight) + tone_contour * weight
+
     def emotion_from_beat(self, beat) -> tuple:
         """Convert a VoiceActingDirector.EmotionalBeat to phonation params.
 

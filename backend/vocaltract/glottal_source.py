@@ -219,6 +219,10 @@ class GlottalSource:
 
             # Handle phase offset within cycle
             start_in_cycle = int(self._phase * self.sample_rate)
+            # Clamp in case f0 changed and phase exceeds new cycle length
+            if start_in_cycle >= cycle_len:
+                start_in_cycle = 0
+                self._phase = 0.0
             remaining_in_cycle = cycle_len - start_in_cycle
             remaining_to_fill = num_samples - pos
 
@@ -255,3 +259,49 @@ class GlottalSource:
         # Simple modulation: noise is stronger where signal is less negative
         envelope = np.clip(signal + 0.5, 0.0, 1.0)
         return signal * (1.0 - aspiration_level * 0.3) + noise * envelope
+
+
+def generate_burst_impulse(
+    num_samples: int,
+    pressure_factor: float = 1.5,
+    decay_rate: float = 8.0,
+    sample_rate: int = 44100,
+) -> np.ndarray:
+    """Generate a burst impulse for ejective release.
+
+    Models the sharp transient from compressed supraglottal air
+    escaping through a sudden oral release. The waveform is a
+    sharp attack followed by exponential decay with added
+    turbulence noise (from the high-velocity airflow).
+
+    Args:
+        num_samples: Number of samples to generate
+        pressure_factor: Supraglottal pressure multiplier (1.0-3.0)
+        decay_rate: Exponential decay rate (higher = sharper burst)
+        sample_rate: Audio sample rate
+
+    Returns:
+        Burst impulse waveform
+    """
+    if num_samples <= 0:
+        return np.array([], dtype=np.float64)
+
+    t = np.arange(num_samples, dtype=np.float64) / sample_rate
+
+    # Sharp attack: half-sine onset over ~1ms then exponential decay
+    attack_samples = min(int(0.001 * sample_rate), num_samples)
+    envelope = np.zeros(num_samples, dtype=np.float64)
+    if attack_samples > 0:
+        envelope[:attack_samples] = np.sin(
+            np.linspace(0, np.pi / 2, attack_samples)
+        )
+    envelope[attack_samples:] = np.exp(-decay_rate * t[attack_samples:])
+
+    # Deterministic impulse component (sharp click)
+    impulse = envelope * pressure_factor
+
+    # Turbulence noise modulated by envelope (high-Re airflow)
+    noise = np.random.randn(num_samples) * 0.4 * pressure_factor
+    turbulence = noise * envelope
+
+    return impulse + turbulence

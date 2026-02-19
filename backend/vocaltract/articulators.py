@@ -54,6 +54,9 @@ class ArticulatorTarget:
     aspiration: float = 0.0
     phonation_type: str = "modal"
 
+    # Airstream mechanism
+    airstream: str = "pulmonic_egressive"  # pulmonic_egressive | glottalic_egressive | glottalic_ingressive | velaric_ingressive
+
     # Fricative noise generation
     noise_source_section: Optional[int] = None  # Tube section for turbulence
     noise_amplitude: float = 0.0
@@ -188,6 +191,7 @@ def interpolate_targets(
         target_frame.phonation_type = end.phonation_type
         target_frame.noise_source_section = end.noise_source_section
         target_frame.noise_amplitude = start.noise_amplitude + (end.noise_amplitude - start.noise_amplitude) * t
+        target_frame.airstream = end.airstream
 
         frames.append(target_frame)
 

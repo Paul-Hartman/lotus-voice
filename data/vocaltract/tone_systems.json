@@ -1,0 +1,82 @@
+{
+  "mandarin": {
+    "name": "Mandarin Chinese",
+    "num_tones": 5,
+    "tones": {
+      "1": {"chao": [5, 5], "name": "high level", "ipa_letter": "˥"},
+      "2": {"chao": [3, 5], "name": "rising", "ipa_letter": "˧˥"},
+      "3": {"chao": [2, 1, 4], "name": "dipping", "ipa_letter": "˨˩˦"},
+      "4": {"chao": [5, 1], "name": "falling", "ipa_letter": "˥˩"},
+      "0": {"chao": [3, 3], "name": "neutral (light)", "ipa_letter": ""}
+    },
+    "sandhi_rules": [
+      {
+        "trigger_tone": 3, "target_tone": 3, "result_tone": 2,
+        "context": "before",
+        "description": "Third tone sandhi: T3 + T3 → T2 + T3"
+      }
+    ]
+  },
+
+  "cantonese": {
+    "name": "Cantonese",
+    "num_tones": 6,
+    "tones": {
+      "1": {"chao": [5, 5], "name": "high level", "ipa_letter": "˥"},
+      "2": {"chao": [3, 5], "name": "high rising", "ipa_letter": "˧˥"},
+      "3": {"chao": [3, 3], "name": "mid level", "ipa_letter": "˧"},
+      "4": {"chao": [2, 1], "name": "low falling", "ipa_letter": "˨˩"},
+      "5": {"chao": [2, 3], "name": "low rising", "ipa_letter": "˨˧"},
+      "6": {"chao": [2, 2], "name": "low level", "ipa_letter": "˨"}
+    },
+    "sandhi_rules": []
+  },
+
+  "vietnamese": {
+    "name": "Vietnamese (Northern)",
+    "num_tones": 6,
+    "tones": {
+      "1": {"chao": [3, 3], "name": "ngang (level)", "ipa_letter": "˧"},
+      "2": {"chao": [2, 1], "name": "huyền (low falling)", "ipa_letter": "˨˩"},
+      "3": {"chao": [3, 5], "name": "sắc (rising)", "ipa_letter": "˧˥"},
+      "4": {"chao": [2, 1, 4], "name": "hỏi (dipping-rising)", "ipa_letter": "˨˩˦"},
+      "5": {"chao": [3, 5, 3], "name": "ngã (creaky rising)", "ipa_letter": "˧˥˧"},
+      "6": {"chao": [2, 1, 2], "name": "nặng (low glottalized)", "ipa_letter": "˨˩˨"}
+    },
+    "sandhi_rules": []
+  },
+
+  "thai": {
+    "name": "Thai",
+    "num_tones": 5,
+    "tones": {
+      "1": {"chao": [3, 3], "name": "mid level", "ipa_letter": "˧"},
+      "2": {"chao": [2, 1], "name": "low", "ipa_letter": "˨˩"},
+      "3": {"chao": [5, 1], "name": "falling", "ipa_letter": "˥˩"},
+      "4": {"chao": [4, 5], "name": "high", "ipa_letter": "˦˥"},
+      "5": {"chao": [2, 4], "name": "rising", "ipa_letter": "˨˦"}
+    },
+    "sandhi_rules": []
+  },
+
+  "yoruba": {
+    "name": "Yoruba",
+    "num_tones": 3,
+    "tones": {
+      "1": {"chao": [5, 5], "name": "high", "ipa_letter": "˥"},
+      "2": {"chao": [3, 3], "name": "mid", "ipa_letter": "˧"},
+      "3": {"chao": [1, 1], "name": "low", "ipa_letter": "˩"}
+    },
+    "sandhi_rules": []
+  },
+
+  "zulu": {
+    "name": "Zulu",
+    "num_tones": 2,
+    "tones": {
+      "1": {"chao": [5, 5], "name": "high", "ipa_letter": "˥"},
+      "2": {"chao": [1, 1], "name": "low", "ipa_letter": "˩"}
+    },
+    "sandhi_rules": []
+  }
+}

@@ -17,8 +17,9 @@ References:
 
 import json
 import logging
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from vocaltract.articulators import ArticulatorTarget
 
@@ -26,12 +27,75 @@ logger = logging.getLogger(__name__)
 
 _DATA_DIR = Path(__file__).parent.parent.parent / "data" / "vocaltract"
 
+# IPA tone letters and diacritics
+_TONE_LETTERS = {"˥", "˦", "˧", "˨", "˩"}
+_TONE_DIACRITICS = {
+    "\u0301",  # ◌́  acute = high/rising
+    "\u0300",  # ◌̀  grave = low/falling
+    "\u0302",  # ◌̂  circumflex = falling
+    "\u030C",  # ◌̌  caron = rising/dipping
+    "\u0304",  # ◌̄  macron = mid level
+}
+
+
+@dataclass
+class PhoneToken:
+    """Structured phone token preserving suprasegmental information.
+
+    Replaces raw strings in the IPA parser output while maintaining
+    backwards compatibility via __str__ and __eq__.
+
+    Attributes:
+        phone: Base phone string (may include diacritics, e.g. "tʰ")
+        tone: Chao-level tone contour if present, e.g. [5, 1] for falling
+        stress: 0=unstressed, 1=primary, 2=secondary
+        syllable_boundary: True if a syllable boundary precedes this token
+        is_long: True if length mark ː was attached
+    """
+    phone: str
+    tone: Optional[List[int]] = None
+    stress: int = 0
+    syllable_boundary: bool = False
+    is_long: bool = False
+
+    def __str__(self) -> str:
+        """Backwards-compatible string: returns phone + ː if long."""
+        if self.is_long:
+            return self.phone + "ː"
+        return self.phone
+
+    def __eq__(self, other) -> bool:
+        """Allow comparison with plain strings for backwards compat."""
+        if isinstance(other, str):
+            return str(self) == other
+        if isinstance(other, PhoneToken):
+            return self.phone == other.phone and self.tone == other.tone
+        return NotImplemented
+
+    def __hash__(self) -> int:
+        return hash(str(self))
+
+
 # Multi-character IPA sequences that should be treated as single phones
 # (Must be checked before single-character lookup)
 DIGRAPHS = [
+    # Affricates
     "tʃ", "dʒ", "ts", "dz", "tɕ", "dʑ", "pf",
-    "kp", "ɡb", "tʼ", "kʼ", "sʼ", "pʼ", "qʼ",
+    "tʂ", "dʐ", "ʈʂ", "ɖʐ", "pɸ", "bβ",
+    # Double articulations
+    "kp", "ɡb",
+    # Ejective affricates
+    "tsʼ", "tʃʼ",
+    # Ejective stops (base + ʼ)
+    "tʼ", "kʼ", "sʼ", "pʼ", "qʼ",
+    # Click accompaniments (prefix + click base)
+    "ɡʘ", "ŋʘ", "ɡǀ", "ŋǀ", "ɡǃ", "ŋǃ", "ɡǂ", "ŋǂ", "ɡǁ", "ŋǁ",
+    # Prenasalized stops (prefix ⁿ + stop)
+    "ⁿb", "ⁿd", "ⁿɡ", "ⁿdʒ", "ⁿdz",
 ]
+
+# Click base symbols for parser recognition
+CLICK_BASES = {"ʘ", "ǀ", "ǃ", "ǂ", "ǁ"}
 
 
 class IPAToArticulation:
@@ -142,10 +206,15 @@ class IPAToArticulation:
         target.noise_source_section = data.get("noise_section")
         target.noise_amplitude = data.get("noise_amplitude", 0.0)
 
-        # Set phonation type from voicing
+        # Airstream mechanism
+        target.airstream = data.get("airstream", "pulmonic_egressive")
+
+        # Set phonation type from voicing and airstream
         voicing = data.get("voicing", True)
         manner = data.get("manner", "vowel")
-        if manner == "stop" and not voicing:
+        if target.airstream == "glottalic_egressive":
+            target.phonation_type = "ejective"
+        elif manner == "stop" and not voicing:
             target.phonation_type = "voiceless"
         elif manner == "fricative" and not voicing:
             target.phonation_type = "voiceless"
@@ -186,6 +255,7 @@ class IPAToArticulation:
             "ˤ": "pharyngealized",
             "ʼ": "ejective",
             "ⁿ": "prenasalized",
+            "˞": "rhotacized",
         }
 
         # Strip combining diacritics
@@ -241,9 +311,17 @@ class IPAToArticulation:
             target.tongue_dorsal_pos = max(target.tongue_dorsal_pos - 0.5, -3.0)
             target.larynx_height = max(target.larynx_height - 0.5, -3.0)
 
+        if "rhotacized" in diacritics:
+            target.tongue_tip = min(target.tongue_tip + 1.5, 3.0)
+            target.tongue_dorsal_shape = max(target.tongue_dorsal_shape - 0.5, -3.0)
+
+        if "prenasalized" in diacritics:
+            target.velum = max(target.velum, 0.8)
+
         if "ejective" in diacritics:
-            # Mark for special processing in Phase 5
             target.phonation_type = "ejective"
+            target.airstream = "glottalic_egressive"
+            target.larynx_height = min(target.larynx_height + 1.5, 3.0)
 
     def is_vowel(self, phone: str) -> bool:
         """Check if a phone is a vowel."""
@@ -292,38 +370,68 @@ class IPAToArticulation:
 
 
 def parse_ipa_to_phones(ipa_string: str) -> list:
-    """Parse an IPA string into individual phone segments.
+    """Parse an IPA string into PhoneToken segments.
 
-    Handles digraphs, diacritics, and suprasegmentals.
+    Handles digraphs, diacritics, tone letters, stress marks,
+    and syllable boundaries. Returns PhoneToken objects that are
+    backwards-compatible with plain strings via __str__ and __eq__.
 
     Args:
         ipa_string: IPA transcription string
 
     Returns:
-        List of phone strings (each may include diacritics)
+        List of PhoneToken (or " " for word boundaries)
     """
-    phones = []
+    phones: list = []
     i = 0
     length = len(ipa_string)
+    pending_stress = 0
+    pending_syllable_boundary = False
+    pending_tone_letters: List[int] = []
 
     while i < length:
         char = ipa_string[i]
 
-        # Skip whitespace (word boundaries)
+        # Whitespace = word boundary (kept as raw string for backwards compat)
         if char == " ":
+            _flush_tone(phones, pending_tone_letters)
+            pending_tone_letters = []
             phones.append(" ")
             i += 1
             continue
 
-        # Skip suprasegmentals (stress, tone)
-        if char in ("ˈ", "ˌ", ".", "|", "‖"):
+        # Stress marks — attach to next phone
+        if char == "ˈ":
+            pending_stress = 1
+            i += 1
+            continue
+        if char == "ˌ":
+            pending_stress = 2
+            i += 1
+            continue
+
+        # Syllable boundary
+        if char == ".":
+            pending_syllable_boundary = True
+            i += 1
+            continue
+
+        # Prosodic boundaries
+        if char in ("|", "‖"):
+            i += 1
+            continue
+
+        # Tone letters — collect and attach to previous or next phone
+        if char in _TONE_LETTERS:
+            from vocaltract.tone import TONE_LETTERS
+            pending_tone_letters.append(TONE_LETTERS[char])
             i += 1
             continue
 
         # Length mark extends previous phone
         if char == "ː":
-            if phones and phones[-1] != " ":
-                phones[-1] += "ː"
+            if phones and isinstance(phones[-1], PhoneToken):
+                phones[-1].is_long = True
             i += 1
             continue
 
@@ -335,20 +443,55 @@ def parse_ipa_to_phones(ipa_string: str) -> list:
                 break
 
         if matched_digraph:
-            phone = matched_digraph
+            phone_str = matched_digraph
             i += len(matched_digraph)
         else:
-            phone = char
+            phone_str = char
             i += 1
 
-        # Collect combining diacritics and modifiers
-        while i < length and _is_diacritic(ipa_string[i]):
-            phone += ipa_string[i]
-            i += 1
+        # Collect combining diacritics and modifiers (but not tone diacritics)
+        tone_from_diacritics = None
+        while i < length and (_is_diacritic(ipa_string[i]) or ipa_string[i] in _TONE_DIACRITICS):
+            if ipa_string[i] in _TONE_DIACRITICS:
+                from vocaltract.tone import TONE_DIACRITICS
+                tone_from_diacritics = TONE_DIACRITICS[ipa_string[i]]
+                i += 1
+            else:
+                phone_str += ipa_string[i]
+                i += 1
 
-        phones.append(phone)
+        # Flush any pending tone letters to the previous phone
+        _flush_tone(phones, pending_tone_letters)
+        pending_tone_letters = []
+
+        # Create token
+        token = PhoneToken(
+            phone=phone_str,
+            tone=tone_from_diacritics,
+            stress=pending_stress,
+            syllable_boundary=pending_syllable_boundary,
+        )
+        pending_stress = 0
+        pending_syllable_boundary = False
+
+        phones.append(token)
+
+    # Flush any trailing tone letters
+    _flush_tone(phones, pending_tone_letters)
 
     return phones
+
+
+def _flush_tone(phones: list, tone_letters: List[int]) -> None:
+    """Attach accumulated tone letters to the most recent PhoneToken."""
+    if not tone_letters or not phones:
+        return
+    # Walk back to find the last PhoneToken
+    for j in range(len(phones) - 1, -1, -1):
+        if isinstance(phones[j], PhoneToken):
+            if phones[j].tone is None:
+                phones[j].tone = tone_letters
+            break
 
 
 def _is_diacritic(char: str) -> bool:
@@ -361,4 +504,5 @@ def _is_diacritic(char: str) -> bool:
         return True
 
     # Superscript modifiers
-    return char in ("ʰ", "ʷ", "ʲ", "ˠ", "ˤ", "ʼ", "ⁿ")
+    # Note: ⁿ is NOT here — it's a prefix (prenasalized), handled via DIGRAPHS
+    return char in ("ʰ", "ʷ", "ʲ", "ˠ", "ˤ", "ʼ", "˞")

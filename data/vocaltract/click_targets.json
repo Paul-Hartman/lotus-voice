@@ -1,0 +1,143 @@
+{
+  "_description": "Click consonant targets. 5 click types × 4 accompaniment variants = 20 entries. Clicks use velaric ingressive airstream.",
+  "_click_types": {
+    "ʘ": "bilabial — lips form anterior closure",
+    "ǀ": "dental — tongue tip against upper teeth",
+    "ǃ": "alveolar (post-alveolar) — tongue tip against alveolar ridge",
+    "ǂ": "palatal — tongue blade against hard palate",
+    "ǁ": "lateral — tongue sides release laterally"
+  },
+  "_accompaniments": {
+    "plain": "voiceless, no accompaniment",
+    "voiced": "voiced velar closure (ɡ prefix)",
+    "nasal": "nasal velar closure (ŋ prefix)",
+    "aspirated": "aspirated release (ʰ suffix)"
+  },
+
+  "clicks": {
+    "ʘ": {
+      "ipa": "ʘ", "description": "bilabial click (plain)",
+      "click_type": "bilabial", "accompaniment": "plain",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 1500, "cavity_fraction": 0.6
+    },
+    "ɡʘ": {
+      "ipa": "ɡʘ", "description": "voiced bilabial click",
+      "click_type": "bilabial", "accompaniment": "voiced",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 1500, "cavity_fraction": 0.6
+    },
+    "ŋʘ": {
+      "ipa": "ŋʘ", "description": "nasal bilabial click",
+      "click_type": "bilabial", "accompaniment": "nasal",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 1500, "cavity_fraction": 0.6
+    },
+    "ʘʰ": {
+      "ipa": "ʘʰ", "description": "aspirated bilabial click",
+      "click_type": "bilabial", "accompaniment": "aspirated",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 1500, "cavity_fraction": 0.6
+    },
+
+    "ǀ": {
+      "ipa": "ǀ", "description": "dental click (plain)",
+      "click_type": "dental", "accompaniment": "plain",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 4000, "cavity_fraction": 0.15
+    },
+    "ɡǀ": {
+      "ipa": "ɡǀ", "description": "voiced dental click",
+      "click_type": "dental", "accompaniment": "voiced",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 4000, "cavity_fraction": 0.15
+    },
+    "ŋǀ": {
+      "ipa": "ŋǀ", "description": "nasal dental click",
+      "click_type": "dental", "accompaniment": "nasal",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 4000, "cavity_fraction": 0.15
+    },
+    "ǀʰ": {
+      "ipa": "ǀʰ", "description": "aspirated dental click",
+      "click_type": "dental", "accompaniment": "aspirated",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 4000, "cavity_fraction": 0.15
+    },
+
+    "ǃ": {
+      "ipa": "ǃ", "description": "alveolar click (plain)",
+      "click_type": "alveolar", "accompaniment": "plain",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3000, "cavity_fraction": 0.2
+    },
+    "ɡǃ": {
+      "ipa": "ɡǃ", "description": "voiced alveolar click",
+      "click_type": "alveolar", "accompaniment": "voiced",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3000, "cavity_fraction": 0.2
+    },
+    "ŋǃ": {
+      "ipa": "ŋǃ", "description": "nasal alveolar click",
+      "click_type": "alveolar", "accompaniment": "nasal",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3000, "cavity_fraction": 0.2
+    },
+    "ǃʰ": {
+      "ipa": "ǃʰ", "description": "aspirated alveolar click",
+      "click_type": "alveolar", "accompaniment": "aspirated",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3000, "cavity_fraction": 0.2
+    },
+
+    "ǂ": {
+      "ipa": "ǂ", "description": "palatal click (plain)",
+      "click_type": "palatal", "accompaniment": "plain",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3500, "cavity_fraction": 0.3
+    },
+    "ɡǂ": {
+      "ipa": "ɡǂ", "description": "voiced palatal click",
+      "click_type": "palatal", "accompaniment": "voiced",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3500, "cavity_fraction": 0.3
+    },
+    "ŋǂ": {
+      "ipa": "ŋǂ", "description": "nasal palatal click",
+      "click_type": "palatal", "accompaniment": "nasal",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3500, "cavity_fraction": 0.3
+    },
+    "ǂʰ": {
+      "ipa": "ǂʰ", "description": "aspirated palatal click",
+      "click_type": "palatal", "accompaniment": "aspirated",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 3500, "cavity_fraction": 0.3
+    },
+
+    "ǁ": {
+      "ipa": "ǁ", "description": "lateral click (plain)",
+      "click_type": "lateral", "accompaniment": "plain",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 2500, "cavity_fraction": 0.25
+    },
+    "ɡǁ": {
+      "ipa": "ɡǁ", "description": "voiced lateral click",
+      "click_type": "lateral", "accompaniment": "voiced",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 2500, "cavity_fraction": 0.25
+    },
+    "ŋǁ": {
+      "ipa": "ŋǁ", "description": "nasal lateral click",
+      "click_type": "lateral", "accompaniment": "nasal",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 2500, "cavity_fraction": 0.25
+    },
+    "ǁʰ": {
+      "ipa": "ǁʰ", "description": "aspirated lateral click",
+      "click_type": "lateral", "accompaniment": "aspirated",
+      "airstream": "velaric_ingressive",
+      "spectral_peak_hz": 2500, "cavity_fraction": 0.25
+    }
+  }
+}

@@ -213,6 +213,43 @@ class SubglottalModel:
 
         return groups
 
+    def get_ingressive_pressure(
+        self,
+        larynx_lowering_rate: float = 0.05,
+        oral_closure_area: float = 0.0,
+        cavity_volume_cm3: float = 30.0,
+    ) -> float:
+        """Compute negative supraglottal pressure for implosives.
+
+        Models Boyle's law in the trapped supraglottal cavity:
+        as the larynx lowers, cavity volume increases and pressure
+        drops below atmospheric.
+
+        P1 * V1 = P2 * V2
+        => P2 = P_atm * V1 / (V1 + ΔV)
+
+        Args:
+            larynx_lowering_rate: cm/s of larynx descent
+            oral_closure_area: Area of oral seal (0 = complete closure)
+            cavity_volume_cm3: Resting volume of supraglottal cavity
+
+        Returns:
+            Pressure differential in cmH2O (negative = below atmospheric)
+        """
+        if oral_closure_area > 0.1:
+            # Air leak through oral closure — pressure can't build
+            return 0.0
+
+        # Volume increase from larynx lowering (~1cm² cross-section)
+        delta_v = larynx_lowering_rate * 1.0  # cm³/s
+
+        # Boyle's law: pressure drops as volume increases
+        p_atm = 1033.0  # cmH2O (atmospheric)
+        v_new = cavity_volume_cm3 + delta_v
+        p_new = p_atm * cavity_volume_cm3 / v_new
+
+        return p_new - p_atm  # Negative value (below atmospheric)
+
     def reset(self) -> None:
         """Reset to initial breath state."""
         self._pressure = self.resting_pressure_cmH2O
