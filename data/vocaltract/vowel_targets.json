@@ -1,0 +1,150 @@
+{
+  "_description": "Articulatory targets for vowels. Parameters in [-3,+3] SD from neutral. Based on Maeda (1990) and IPA vowel chart acoustic correlates.",
+  "_parameter_key": {
+    "jaw": "positive=open, negative=closed",
+    "tongue_dorsal_pos": "positive=front, negative=back",
+    "tongue_dorsal_shape": "positive=arched, negative=flat",
+    "tongue_tip": "positive=raised, negative=lowered",
+    "lip_height": "positive=open, negative=closed",
+    "lip_protrusion": "positive=protruded, negative=retracted",
+    "larynx_height": "positive=raised, negative=lowered",
+    "velum": "0=closed(oral), 1=open(nasal)"
+  },
+  "_formant_targets": "Peterson & Barney (1952) male speaker averages",
+
+  "vowels": {
+    "i": {
+      "ipa": "i", "description": "close front unrounded",
+      "jaw": -1.5, "tongue_dorsal_pos": 2.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 0.5, "lip_height": -0.5, "lip_protrusion": -1.0,
+      "larynx_height": 0.5, "velum": 0.0,
+      "expected_formants": {"F1": 270, "F2": 2290, "F3": 3010}
+    },
+    "ɪ": {
+      "ipa": "ɪ", "description": "near-close near-front unrounded",
+      "jaw": -1.0, "tongue_dorsal_pos": 1.8, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 0.3, "lip_height": -0.3, "lip_protrusion": -0.5,
+      "larynx_height": 0.3, "velum": 0.0,
+      "expected_formants": {"F1": 390, "F2": 1990, "F3": 2550}
+    },
+    "e": {
+      "ipa": "e", "description": "close-mid front unrounded",
+      "jaw": -0.5, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 0.2, "lip_height": 0.0, "lip_protrusion": -0.5,
+      "larynx_height": 0.3, "velum": 0.0,
+      "expected_formants": {"F1": 400, "F2": 2100, "F3": 2650}
+    },
+    "ɛ": {
+      "ipa": "ɛ", "description": "open-mid front unrounded",
+      "jaw": 0.5, "tongue_dorsal_pos": 1.5, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.5, "lip_protrusion": -0.3,
+      "larynx_height": 0.0, "velum": 0.0,
+      "expected_formants": {"F1": 530, "F2": 1840, "F3": 2480}
+    },
+    "æ": {
+      "ipa": "æ", "description": "near-open front unrounded",
+      "jaw": 1.5, "tongue_dorsal_pos": 1.2, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": -0.3, "lip_height": 1.0, "lip_protrusion": -0.3,
+      "larynx_height": -0.2, "velum": 0.0,
+      "expected_formants": {"F1": 660, "F2": 1720, "F3": 2410}
+    },
+    "a": {
+      "ipa": "a", "description": "open front unrounded",
+      "jaw": 2.0, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -1.0,
+      "tongue_tip": -0.5, "lip_height": 1.5, "lip_protrusion": -0.2,
+      "larynx_height": -0.3, "velum": 0.0,
+      "expected_formants": {"F1": 730, "F2": 1300, "F3": 2450}
+    },
+    "ɑ": {
+      "ipa": "ɑ", "description": "open back unrounded",
+      "jaw": 2.0, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": -1.0,
+      "tongue_tip": -0.5, "lip_height": 1.5, "lip_protrusion": 0.0,
+      "larynx_height": -0.5, "velum": 0.0,
+      "expected_formants": {"F1": 730, "F2": 1090, "F3": 2440}
+    },
+    "ɒ": {
+      "ipa": "ɒ", "description": "open back rounded",
+      "jaw": 1.8, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": -1.0,
+      "tongue_tip": -0.5, "lip_height": 0.8, "lip_protrusion": 1.0,
+      "larynx_height": -0.5, "velum": 0.0,
+      "expected_formants": {"F1": 600, "F2": 900, "F3": 2400}
+    },
+    "ɔ": {
+      "ipa": "ɔ", "description": "open-mid back rounded",
+      "jaw": 1.0, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": -0.3, "lip_height": 0.3, "lip_protrusion": 1.5,
+      "larynx_height": -0.3, "velum": 0.0,
+      "expected_formants": {"F1": 570, "F2": 840, "F3": 2410}
+    },
+    "o": {
+      "ipa": "o", "description": "close-mid back rounded",
+      "jaw": -0.5, "tongue_dorsal_pos": -2.0, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": -0.2, "lip_height": -0.3, "lip_protrusion": 2.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "expected_formants": {"F1": 400, "F2": 800, "F3": 2600}
+    },
+    "ʊ": {
+      "ipa": "ʊ", "description": "near-close near-back rounded",
+      "jaw": -1.0, "tongue_dorsal_pos": -1.8, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": -0.2, "lip_height": -0.5, "lip_protrusion": 2.0,
+      "larynx_height": -0.2, "velum": 0.0,
+      "expected_formants": {"F1": 440, "F2": 1020, "F3": 2240}
+    },
+    "u": {
+      "ipa": "u", "description": "close back rounded",
+      "jaw": -1.5, "tongue_dorsal_pos": -2.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": -0.3, "lip_height": -0.8, "lip_protrusion": 2.5,
+      "larynx_height": -0.5, "velum": 0.0,
+      "expected_formants": {"F1": 300, "F2": 870, "F3": 2240}
+    },
+    "y": {
+      "ipa": "y", "description": "close front rounded",
+      "jaw": -1.5, "tongue_dorsal_pos": 2.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 0.5, "lip_height": -0.8, "lip_protrusion": 2.0,
+      "larynx_height": 0.3, "velum": 0.0,
+      "expected_formants": {"F1": 235, "F2": 2100, "F3": 2700}
+    },
+    "ø": {
+      "ipa": "ø", "description": "close-mid front rounded",
+      "jaw": -0.5, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 0.2, "lip_height": -0.3, "lip_protrusion": 1.5,
+      "larynx_height": 0.2, "velum": 0.0,
+      "expected_formants": {"F1": 370, "F2": 1900, "F3": 2600}
+    },
+    "ɯ": {
+      "ipa": "ɯ", "description": "close back unrounded",
+      "jaw": -1.5, "tongue_dorsal_pos": -2.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": -0.3, "lip_height": -0.5, "lip_protrusion": -1.0,
+      "larynx_height": -0.5, "velum": 0.0,
+      "expected_formants": {"F1": 300, "F2": 1350, "F3": 2400}
+    },
+    "ə": {
+      "ipa": "ə", "description": "mid central (schwa)",
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "expected_formants": {"F1": 500, "F2": 1500, "F3": 2500}
+    },
+    "ɨ": {
+      "ipa": "ɨ", "description": "close central unrounded",
+      "jaw": -1.5, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.8,
+      "tongue_tip": 0.3, "lip_height": -0.5, "lip_protrusion": -0.5,
+      "larynx_height": 0.3, "velum": 0.0,
+      "expected_formants": {"F1": 280, "F2": 1700, "F3": 2700}
+    },
+    "ʌ": {
+      "ipa": "ʌ", "description": "open-mid back unrounded",
+      "jaw": 1.0, "tongue_dorsal_pos": -1.0, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": -0.2, "lip_height": 0.5, "lip_protrusion": -0.3,
+      "larynx_height": -0.2, "velum": 0.0,
+      "expected_formants": {"F1": 600, "F2": 1170, "F3": 2410}
+    },
+    "ɐ": {
+      "ipa": "ɐ", "description": "near-open central",
+      "jaw": 1.5, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": -0.3, "lip_height": 1.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.2, "velum": 0.0,
+      "expected_formants": {"F1": 650, "F2": 1350, "F3": 2450}
+    }
+  }
+}

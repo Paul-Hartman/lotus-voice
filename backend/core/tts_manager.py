@@ -38,6 +38,7 @@ class TTSManager:
             (TTSBackend.XTTS_V2, "core.backends.xtts_v2_backend", "XTTSv2Backend"),
             (TTSBackend.ORPHEUS, "core.backends.orpheus_backend", "OrpheusBackend"),
             (TTSBackend.CHATTERBOX, "core.backends.chatterbox_backend", "ChatterboxBackend"),
+            (TTSBackend.VOCALTRACT, "core.backends.vocaltract_backend", "VocalTractBackend"),
         ]
 
         for backend_type, module_name, class_name in backend_classes:
@@ -70,8 +71,10 @@ class TTSManager:
         ancient = requirements.get("ancient_language", False)
         ipa_input = requirements.get("ipa_input", False)
 
-        # Ancient language: eSpeak for IPA, ElevenLabs for SSML
+        # Ancient language / IPA: prefer vocaltract (physical model), fallback to eSpeak
         if ancient or ipa_input:
+            if TTSBackend.VOCALTRACT in self.backends:
+                return self.backends[TTSBackend.VOCALTRACT]
             if TTSBackend.ESPEAK in self.backends:
                 return self.backends[TTSBackend.ESPEAK]
 

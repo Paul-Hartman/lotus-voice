@@ -1,0 +1,101 @@
+{
+  "_description": "Coarticulation rules for connected speech. Locus equations from Sussman et al. (1991), resistance values from articulatory constraint studies.",
+
+  "locus_equations": {
+    "_description": "F2 onset = slope * F2_vowel + intercept (Hz). From Sussman et al. 1991.",
+    "bilabial": {"slope": 0.85, "intercept": 300, "_note": "/b,p,m/ — minimal F2 constraint"},
+    "labiodental": {"slope": 0.80, "intercept": 350},
+    "dental": {"slope": 0.50, "intercept": 1000},
+    "alveolar": {"slope": 0.45, "intercept": 1050, "_note": "/d,t,n/ — strong alveolar locus"},
+    "postalveolar": {"slope": 0.50, "intercept": 950},
+    "retroflex": {"slope": 0.55, "intercept": 800},
+    "palatal": {"slope": 0.55, "intercept": 900},
+    "velar": {"slope": 0.95, "intercept": 100, "_note": "/g,k,ŋ/ — F2 follows vowel (variable locus)"},
+    "uvular": {"slope": 0.90, "intercept": 150},
+    "pharyngeal": {"slope": 0.75, "intercept": 400},
+    "glottal": {"slope": 0.90, "intercept": 200, "_note": "/h,ʔ/ — minimal constraint"}
+  },
+
+  "resistance": {
+    "_description": "Per-articulator resistance to coarticulation (0=fully coarticulated, 1=fixed). Higher values mean the articulator resists neighboring phone influence.",
+    "stop": {
+      "jaw": 0.9, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": 0.7,
+      "tongue_tip": 0.9, "lip_height": 0.9, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.95,
+      "_note": "Stops require precise closure — most articulators resist coarticulation"
+    },
+    "fricative": {
+      "jaw": 0.7, "tongue_dorsal_pos": 0.7, "tongue_dorsal_shape": 0.6,
+      "tongue_tip": 0.8, "lip_height": 0.5, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.9,
+      "_note": "Fricatives need narrow constriction but allow some coarticulation"
+    },
+    "nasal": {
+      "jaw": 0.5, "tongue_dorsal_pos": 0.7, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 0.8, "lip_height": 0.8, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.95,
+      "_note": "Velum must stay open; oral closure point resists but jaw can vary"
+    },
+    "vowel": {
+      "jaw": 0.3, "tongue_dorsal_pos": 0.3, "tongue_dorsal_shape": 0.3,
+      "tongue_tip": 0.2, "lip_height": 0.3, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.5,
+      "_note": "Vowels are most susceptible to coarticulation — open tract allows blending"
+    },
+    "approximant": {
+      "jaw": 0.4, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": 0.4,
+      "tongue_tip": 0.5, "lip_height": 0.4, "lip_protrusion": 0.4,
+      "larynx_height": 0.2, "velum": 0.5,
+      "_note": "Moderate resistance — slight constriction allows some blending"
+    },
+    "lateral": {
+      "jaw": 0.4, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 0.8, "lip_height": 0.3, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.5,
+      "_note": "Tongue tip must stay for central closure, but body can coarticulate"
+    },
+    "trill": {
+      "jaw": 0.5, "tongue_dorsal_pos": 0.6, "tongue_dorsal_shape": 0.4,
+      "tongue_tip": 0.7, "lip_height": 0.3, "lip_protrusion": 0.3,
+      "larynx_height": 0.2, "velum": 0.5
+    },
+    "tap": {
+      "jaw": 0.3, "tongue_dorsal_pos": 0.3, "tongue_dorsal_shape": 0.3,
+      "tongue_tip": 0.6, "lip_height": 0.2, "lip_protrusion": 0.2,
+      "larynx_height": 0.2, "velum": 0.5,
+      "_note": "Very brief — almost fully coarticulated with neighbors"
+    },
+    "affricate": {
+      "jaw": 0.8, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": 0.7,
+      "tongue_tip": 0.9, "lip_height": 0.7, "lip_protrusion": 0.4,
+      "larynx_height": 0.2, "velum": 0.9
+    }
+  },
+
+  "transition_multipliers": {
+    "_description": "Multiplier on base transition duration by manner of the target phone. Smaller = faster transition.",
+    "stop": 0.6,
+    "fricative": 0.8,
+    "nasal": 0.9,
+    "vowel": 1.0,
+    "approximant": 1.0,
+    "lateral": 0.9,
+    "trill": 0.7,
+    "tap": 0.4,
+    "affricate": 0.7,
+    "lateral_fricative": 0.8
+  },
+
+  "anticipatory_lookahead": {
+    "_description": "How far ahead (in phones) each articulator anticipates",
+    "lip_protrusion": 3,
+    "lip_height": 2,
+    "velum": 2,
+    "tongue_dorsal_pos": 1,
+    "tongue_dorsal_shape": 1,
+    "tongue_tip": 1,
+    "jaw": 1,
+    "larynx_height": 1,
+    "_note": "Lip rounding anticipates furthest ahead (3 phones in 'stew'), velum opens/closes early"
+  }
+}

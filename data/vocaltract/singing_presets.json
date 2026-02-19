@@ -1,0 +1,99 @@
+{
+  "_description": "Singing voice presets: register configurations, vibrato parameters, and voice type ranges.",
+
+  "registers": {
+    "chest": {
+      "Rd": 0.8,
+      "pressure_multiplier": 1.0,
+      "glottal_closure": 0.7,
+      "singer_formant_strength": 0.8,
+      "oq_target": 0.5,
+      "larynx_offset": -0.5,
+      "description": "Full, rich chest voice — strong vocal fold contact"
+    },
+    "head": {
+      "Rd": 1.3,
+      "pressure_multiplier": 0.8,
+      "glottal_closure": 0.5,
+      "singer_formant_strength": 0.5,
+      "oq_target": 0.6,
+      "larynx_offset": 0.0,
+      "description": "Lighter head voice — less fold contact, more ring"
+    },
+    "falsetto": {
+      "Rd": 2.0,
+      "pressure_multiplier": 0.6,
+      "glottal_closure": 0.3,
+      "singer_formant_strength": 0.2,
+      "oq_target": 0.75,
+      "larynx_offset": 0.3,
+      "description": "Breathy falsetto — minimal fold contact"
+    },
+    "mixed": {
+      "Rd": 1.0,
+      "pressure_multiplier": 0.9,
+      "glottal_closure": 0.6,
+      "singer_formant_strength": 0.6,
+      "oq_target": 0.55,
+      "larynx_offset": -0.3,
+      "description": "Contemporary mixed voice — belt quality"
+    },
+    "whistle": {
+      "Rd": 2.5,
+      "pressure_multiplier": 0.5,
+      "glottal_closure": 0.2,
+      "singer_formant_strength": 0.0,
+      "oq_target": 0.9,
+      "larynx_offset": 0.5,
+      "description": "Whistle register — extreme high range"
+    }
+  },
+
+  "vibrato_presets": {
+    "classical": {
+      "rate_hz": 5.5,
+      "extent_semitones": 1.0,
+      "delay_sec": 0.2,
+      "rise_time_sec": 0.15,
+      "description": "Standard classical vibrato"
+    },
+    "operatic": {
+      "rate_hz": 5.0,
+      "extent_semitones": 1.2,
+      "delay_sec": 0.15,
+      "rise_time_sec": 0.1,
+      "description": "Wider operatic vibrato"
+    },
+    "pop": {
+      "rate_hz": 6.0,
+      "extent_semitones": 0.5,
+      "delay_sec": 0.3,
+      "rise_time_sec": 0.2,
+      "description": "Subtle pop/contemporary vibrato"
+    },
+    "gospel": {
+      "rate_hz": 5.5,
+      "extent_semitones": 1.5,
+      "delay_sec": 0.1,
+      "rise_time_sec": 0.08,
+      "description": "Wide, fast gospel vibrato"
+    },
+    "straight": {
+      "rate_hz": 0.0,
+      "extent_semitones": 0.0,
+      "delay_sec": 0.0,
+      "rise_time_sec": 0.0,
+      "description": "No vibrato (straight tone)"
+    }
+  },
+
+  "voice_types": {
+    "_note": "Approximate comfortable singing ranges in MIDI note numbers",
+    "soprano": {"low": 60, "high": 84, "passaggio": [66, 73], "default_register": "head"},
+    "mezzo_soprano": {"low": 57, "high": 81, "passaggio": [64, 71], "default_register": "mixed"},
+    "alto": {"low": 53, "high": 77, "passaggio": [60, 67], "default_register": "chest"},
+    "tenor": {"low": 48, "high": 72, "passaggio": [59, 66], "default_register": "mixed"},
+    "baritone": {"low": 43, "high": 67, "passaggio": [55, 62], "default_register": "chest"},
+    "bass": {"low": 40, "high": 64, "passaggio": [52, 59], "default_register": "chest"}
+  }
+}

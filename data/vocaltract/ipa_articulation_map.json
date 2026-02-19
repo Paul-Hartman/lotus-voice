@@ -1,0 +1,132 @@
+{
+  "_description": "Master IPA-to-articulation feature map. Maps IPA symbols to phonetic features for programmatic target generation when detailed articulatory targets are not pre-defined.",
+  "_usage": "Used by ipa_to_articulation.py as fallback when a phone is not in vowel_targets.json or consonant_targets.json",
+
+  "vowel_features": {
+    "_dimensions": {
+      "height": {"close": -1.5, "near-close": -1.0, "close-mid": -0.5, "mid": 0.0, "open-mid": 0.5, "near-open": 1.5, "open": 2.0},
+      "backness": {"front": 2.5, "near-front": 1.8, "central": 0.0, "near-back": -1.8, "back": -2.5},
+      "rounding": {"unrounded": -0.5, "rounded": 2.0}
+    },
+    "i": {"height": "close", "backness": "front", "rounding": "unrounded"},
+    "y": {"height": "close", "backness": "front", "rounding": "rounded"},
+    "ɨ": {"height": "close", "backness": "central", "rounding": "unrounded"},
+    "ʉ": {"height": "close", "backness": "central", "rounding": "rounded"},
+    "ɯ": {"height": "close", "backness": "back", "rounding": "unrounded"},
+    "u": {"height": "close", "backness": "back", "rounding": "rounded"},
+    "ɪ": {"height": "near-close", "backness": "near-front", "rounding": "unrounded"},
+    "ʏ": {"height": "near-close", "backness": "near-front", "rounding": "rounded"},
+    "ʊ": {"height": "near-close", "backness": "near-back", "rounding": "rounded"},
+    "e": {"height": "close-mid", "backness": "front", "rounding": "unrounded"},
+    "ø": {"height": "close-mid", "backness": "front", "rounding": "rounded"},
+    "ɘ": {"height": "close-mid", "backness": "central", "rounding": "unrounded"},
+    "ɵ": {"height": "close-mid", "backness": "central", "rounding": "rounded"},
+    "ɤ": {"height": "close-mid", "backness": "back", "rounding": "unrounded"},
+    "o": {"height": "close-mid", "backness": "back", "rounding": "rounded"},
+    "ə": {"height": "mid", "backness": "central", "rounding": "unrounded"},
+    "ɛ": {"height": "open-mid", "backness": "front", "rounding": "unrounded"},
+    "œ": {"height": "open-mid", "backness": "front", "rounding": "rounded"},
+    "ɜ": {"height": "open-mid", "backness": "central", "rounding": "unrounded"},
+    "ɞ": {"height": "open-mid", "backness": "central", "rounding": "rounded"},
+    "ʌ": {"height": "open-mid", "backness": "back", "rounding": "unrounded"},
+    "ɔ": {"height": "open-mid", "backness": "back", "rounding": "rounded"},
+    "æ": {"height": "near-open", "backness": "front", "rounding": "unrounded"},
+    "ɐ": {"height": "near-open", "backness": "central", "rounding": "unrounded"},
+    "a": {"height": "open", "backness": "front", "rounding": "unrounded"},
+    "ɶ": {"height": "open", "backness": "front", "rounding": "rounded"},
+    "ɑ": {"height": "open", "backness": "back", "rounding": "unrounded"},
+    "ɒ": {"height": "open", "backness": "back", "rounding": "rounded"}
+  },
+
+  "consonant_features": {
+    "_places": ["bilabial", "labiodental", "dental", "alveolar", "postalveolar", "retroflex", "palatal", "velar", "uvular", "pharyngeal", "glottal"],
+    "_manners": ["stop", "nasal", "trill", "tap", "fricative", "lateral_fricative", "approximant", "lateral"],
+
+    "p": {"place": "bilabial", "manner": "stop", "voicing": false},
+    "b": {"place": "bilabial", "manner": "stop", "voicing": true},
+    "t": {"place": "alveolar", "manner": "stop", "voicing": false},
+    "d": {"place": "alveolar", "manner": "stop", "voicing": true},
+    "ʈ": {"place": "retroflex", "manner": "stop", "voicing": false},
+    "ɖ": {"place": "retroflex", "manner": "stop", "voicing": true},
+    "c": {"place": "palatal", "manner": "stop", "voicing": false},
+    "ɟ": {"place": "palatal", "manner": "stop", "voicing": true},
+    "k": {"place": "velar", "manner": "stop", "voicing": false},
+    "ɡ": {"place": "velar", "manner": "stop", "voicing": true},
+    "q": {"place": "uvular", "manner": "stop", "voicing": false},
+    "ɢ": {"place": "uvular", "manner": "stop", "voicing": true},
+    "ʔ": {"place": "glottal", "manner": "stop", "voicing": false},
+
+    "m": {"place": "bilabial", "manner": "nasal", "voicing": true},
+    "ɱ": {"place": "labiodental", "manner": "nasal", "voicing": true},
+    "n": {"place": "alveolar", "manner": "nasal", "voicing": true},
+    "ɳ": {"place": "retroflex", "manner": "nasal", "voicing": true},
+    "ɲ": {"place": "palatal", "manner": "nasal", "voicing": true},
+    "ŋ": {"place": "velar", "manner": "nasal", "voicing": true},
+    "ɴ": {"place": "uvular", "manner": "nasal", "voicing": true},
+
+    "ʙ": {"place": "bilabial", "manner": "trill", "voicing": true},
+    "r": {"place": "alveolar", "manner": "trill", "voicing": true},
+    "ʀ": {"place": "uvular", "manner": "trill", "voicing": true},
+
+    "ⱱ": {"place": "labiodental", "manner": "tap", "voicing": true},
+    "ɾ": {"place": "alveolar", "manner": "tap", "voicing": true},
+    "ɽ": {"place": "retroflex", "manner": "tap", "voicing": true},
+
+    "ɸ": {"place": "bilabial", "manner": "fricative", "voicing": false},
+    "β": {"place": "bilabial", "manner": "fricative", "voicing": true},
+    "f": {"place": "labiodental", "manner": "fricative", "voicing": false},
+    "v": {"place": "labiodental", "manner": "fricative", "voicing": true},
+    "θ": {"place": "dental", "manner": "fricative", "voicing": false},
+    "ð": {"place": "dental", "manner": "fricative", "voicing": true},
+    "s": {"place": "alveolar", "manner": "fricative", "voicing": false},
+    "z": {"place": "alveolar", "manner": "fricative", "voicing": true},
+    "ʃ": {"place": "postalveolar", "manner": "fricative", "voicing": false},
+    "ʒ": {"place": "postalveolar", "manner": "fricative", "voicing": true},
+    "ʂ": {"place": "retroflex", "manner": "fricative", "voicing": false},
+    "ʐ": {"place": "retroflex", "manner": "fricative", "voicing": true},
+    "ç": {"place": "palatal", "manner": "fricative", "voicing": false},
+    "ʝ": {"place": "palatal", "manner": "fricative", "voicing": true},
+    "x": {"place": "velar", "manner": "fricative", "voicing": false},
+    "ɣ": {"place": "velar", "manner": "fricative", "voicing": true},
+    "χ": {"place": "uvular", "manner": "fricative", "voicing": false},
+    "ʁ": {"place": "uvular", "manner": "fricative", "voicing": true},
+    "ħ": {"place": "pharyngeal", "manner": "fricative", "voicing": false},
+    "ʕ": {"place": "pharyngeal", "manner": "fricative", "voicing": true},
+    "h": {"place": "glottal", "manner": "fricative", "voicing": false},
+    "ɦ": {"place": "glottal", "manner": "fricative", "voicing": true},
+
+    "ɬ": {"place": "alveolar", "manner": "lateral_fricative", "voicing": false},
+    "ɮ": {"place": "alveolar", "manner": "lateral_fricative", "voicing": true},
+
+    "ʋ": {"place": "labiodental", "manner": "approximant", "voicing": true},
+    "ɹ": {"place": "alveolar", "manner": "approximant", "voicing": true},
+    "ɻ": {"place": "retroflex", "manner": "approximant", "voicing": true},
+    "j": {"place": "palatal", "manner": "approximant", "voicing": true},
+    "ɰ": {"place": "velar", "manner": "approximant", "voicing": true},
+    "w": {"place": "bilabial", "manner": "approximant", "voicing": true, "secondary_place": "velar"},
+
+    "l": {"place": "alveolar", "manner": "lateral", "voicing": true},
+    "ɭ": {"place": "retroflex", "manner": "lateral", "voicing": true},
+    "ʎ": {"place": "palatal", "manner": "lateral", "voicing": true},
+    "ʟ": {"place": "velar", "manner": "lateral", "voicing": true}
+  },
+
+  "affricate_sequences": {
+    "tʃ": {"stop": "t", "fricative": "ʃ"},
+    "dʒ": {"stop": "d", "fricative": "ʒ"},
+    "ts": {"stop": "t", "fricative": "s"},
+    "dz": {"stop": "d", "fricative": "z"},
+    "tɕ": {"stop": "t", "fricative": "ɕ"},
+    "dʑ": {"stop": "d", "fricative": "ʑ"},
+    "pf": {"stop": "p", "fricative": "f"}
+  },
+
+  "akkadian_special": {
+    "_description": "Akkadian emphatic consonants (ejectives in reconstruction)",
+    "tʼ": {"base": "t", "mechanism": "ejective", "description": "emphatic /ṭ/"},
+    "sʼ": {"base": "s", "mechanism": "ejective", "description": "emphatic /ṣ/"},
+    "kʼ": {"base": "k", "mechanism": "ejective", "description": "emphatic /ḳ/"},
+    "qʼ": {"base": "q", "mechanism": "ejective", "description": "emphatic /q/"},
+    "pʼ": {"base": "p", "mechanism": "ejective", "description": "emphatic /p̣/"}
+  }
+}

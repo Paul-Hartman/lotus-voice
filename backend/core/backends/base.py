@@ -18,6 +18,7 @@ class TTSBackend(Enum):
     XTTS_V2 = "xtts_v2"
     ORPHEUS = "orpheus"
     CHATTERBOX = "chatterbox"
+    VOCALTRACT = "vocaltract"
 
 
 class EmotionTag(Enum):

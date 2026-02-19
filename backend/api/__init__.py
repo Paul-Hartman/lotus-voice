@@ -5,6 +5,7 @@ from api.audiobook import audiobook_bp
 from api.backends import backends_bp
 from api.health import health_bp
 from api.synthesis import synthesis_bp
+from api.vocaltract import vocaltract_bp
 from api.voices import voices_bp
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "voices_bp",
     "backends_bp",
     "ancient_bp",
+    "vocaltract_bp",
 ]

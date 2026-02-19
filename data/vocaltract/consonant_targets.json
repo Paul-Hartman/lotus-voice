@@ -1,0 +1,567 @@
+{
+  "_description": "Articulatory targets for consonants. Parameters in [-3,+3] SD. Manner encoded via constriction degree and noise properties.",
+  "_manner_encoding": {
+    "stop": "Complete closure (area → 0) at place of articulation",
+    "fricative": "Narrow constriction + turbulence noise at constriction",
+    "nasal": "Complete oral closure + velum open",
+    "approximant": "Slight constriction, no turbulence",
+    "lateral": "Central closure with lateral channels open",
+    "trill": "Oscillating closure (modeled as rapid alternation)",
+    "tap": "Very brief stop-like closure"
+  },
+  "_noise_sections": {
+    "bilabial": 42,
+    "labiodental": 40,
+    "dental": 37,
+    "alveolar": 34,
+    "postalveolar": 31,
+    "retroflex": 30,
+    "palatal": 26,
+    "velar": 20,
+    "uvular": 15,
+    "pharyngeal": 10,
+    "glottal": 2
+  },
+
+  "consonants": {
+    "p": {
+      "ipa": "p", "description": "voiceless bilabial stop",
+      "manner": "stop", "voicing": false,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -3.0, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "b": {
+      "ipa": "b", "description": "voiced bilabial stop",
+      "manner": "stop", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -3.0, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "t": {
+      "ipa": "t", "description": "voiceless alveolar stop",
+      "manner": "stop", "voicing": false,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 3.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "d": {
+      "ipa": "d", "description": "voiced alveolar stop",
+      "manner": "stop", "voicing": true,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 3.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ʈ": {
+      "ipa": "ʈ", "description": "voiceless retroflex stop",
+      "manner": "stop", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.8, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "ɖ": {
+      "ipa": "ɖ", "description": "voiced retroflex stop",
+      "manner": "stop", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.8, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "c": {
+      "ipa": "c", "description": "voiceless palatal stop",
+      "manner": "stop", "voicing": false,
+      "jaw": -0.5, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": 0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "ɟ": {
+      "ipa": "ɟ", "description": "voiced palatal stop",
+      "manner": "stop", "voicing": true,
+      "jaw": -0.5, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": 0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "k": {
+      "ipa": "k", "description": "voiceless velar stop",
+      "manner": "stop", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 2.0,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "ɡ": {
+      "ipa": "ɡ", "description": "voiced velar stop",
+      "manner": "stop", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 2.0,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "g": {
+      "ipa": "g", "description": "voiced velar stop (ASCII alias)",
+      "manner": "stop", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 2.0,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "q": {
+      "ipa": "q", "description": "voiceless uvular stop",
+      "manner": "stop", "voicing": false,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": -0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+    "ɢ": {
+      "ipa": "ɢ", "description": "voiced uvular stop",
+      "manner": "stop", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": -0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ʔ": {
+      "ipa": "ʔ", "description": "glottal stop",
+      "manner": "stop", "voicing": false,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.5, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 0.3, "aspiration": 0.0
+    },
+
+    "m": {
+      "ipa": "m", "description": "voiced bilabial nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -3.0, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "n": {
+      "ipa": "n", "description": "voiced alveolar nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 3.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɳ": {
+      "ipa": "ɳ", "description": "voiced retroflex nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.8, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɲ": {
+      "ipa": "ɲ", "description": "voiced palatal nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": 0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ŋ": {
+      "ipa": "ŋ", "description": "voiced velar nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 2.0,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɴ": {
+      "ipa": "ɴ", "description": "voiced uvular nasal",
+      "manner": "nasal", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": -0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 1.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+
+    "f": {
+      "ipa": "f", "description": "voiceless labiodental fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -2.0, "lip_protrusion": -0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 40, "noise_amplitude": 0.8,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "v": {
+      "ipa": "v", "description": "voiced labiodental fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -2.0, "lip_protrusion": -0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 40, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.15
+    },
+    "θ": {
+      "ipa": "θ", "description": "voiceless dental fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 2.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 37, "noise_amplitude": 0.6,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "ð": {
+      "ipa": "ð", "description": "voiced dental fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 2.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 37, "noise_amplitude": 0.3,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+    "s": {
+      "ipa": "s", "description": "voiceless alveolar fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.2, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 2.2, "lip_height": -0.2, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 1.0,
+      "Rd": 0.3, "aspiration": 0.4
+    },
+    "z": {
+      "ipa": "z", "description": "voiced alveolar fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.2, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 2.2, "lip_height": -0.2, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 0.5,
+      "Rd": 1.0, "aspiration": 0.15
+    },
+    "ʃ": {
+      "ipa": "ʃ", "description": "voiceless postalveolar fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 1.8, "lip_height": -0.3, "lip_protrusion": 0.8,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 31, "noise_amplitude": 0.9,
+      "Rd": 0.3, "aspiration": 0.35
+    },
+    "ʒ": {
+      "ipa": "ʒ", "description": "voiced postalveolar fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 1.8, "lip_height": -0.3, "lip_protrusion": 0.8,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 31, "noise_amplitude": 0.5,
+      "Rd": 1.0, "aspiration": 0.15
+    },
+    "ʂ": {
+      "ipa": "ʂ", "description": "voiceless retroflex fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 30, "noise_amplitude": 0.8,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "ʐ": {
+      "ipa": "ʐ", "description": "voiced retroflex fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 30, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.15
+    },
+    "ç": {
+      "ipa": "ç", "description": "voiceless palatal fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.5, "tongue_dorsal_pos": 2.0, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": 0.3, "lip_height": -0.2, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 26, "noise_amplitude": 0.7,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "x": {
+      "ipa": "x", "description": "voiceless velar fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.2, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 1.8,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 20, "noise_amplitude": 0.7,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "ɣ": {
+      "ipa": "ɣ", "description": "voiced velar fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": -0.5, "tongue_dorsal_shape": 1.8,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 20, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+    "χ": {
+      "ipa": "χ", "description": "voiceless uvular fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.2, "tongue_dorsal_shape": 1.2,
+      "tongue_tip": -0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": 15, "noise_amplitude": 0.7,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "ʁ": {
+      "ipa": "ʁ", "description": "voiced uvular fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.2, "tongue_dorsal_shape": 1.2,
+      "tongue_tip": -0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": 15, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+    "ħ": {
+      "ipa": "ħ", "description": "voiceless pharyngeal fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": 0.5, "tongue_dorsal_pos": -1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.3, "lip_protrusion": 0.0,
+      "larynx_height": -1.0, "velum": 0.0,
+      "noise_section": 10, "noise_amplitude": 0.6,
+      "Rd": 0.5, "aspiration": 0.4
+    },
+    "ʕ": {
+      "ipa": "ʕ", "description": "voiced pharyngeal fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": 0.5, "tongue_dorsal_pos": -1.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.3, "lip_protrusion": 0.0,
+      "larynx_height": -1.0, "velum": 0.0,
+      "noise_section": 10, "noise_amplitude": 0.3,
+      "Rd": 1.2, "aspiration": 0.1
+    },
+    "h": {
+      "ipa": "h", "description": "voiceless glottal fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 2, "noise_amplitude": 0.7,
+      "Rd": 2.5, "aspiration": 0.8
+    },
+    "ɦ": {
+      "ipa": "ɦ", "description": "voiced glottal fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 2, "noise_amplitude": 0.4,
+      "Rd": 2.0, "aspiration": 0.5
+    },
+    "ɸ": {
+      "ipa": "ɸ", "description": "voiceless bilabial fricative",
+      "manner": "fricative", "voicing": false,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -2.5, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 42, "noise_amplitude": 0.7,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "β": {
+      "ipa": "β", "description": "voiced bilabial fricative",
+      "manner": "fricative", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -2.5, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 42, "noise_amplitude": 0.3,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+
+    "l": {
+      "ipa": "l", "description": "voiced alveolar lateral approximant",
+      "manner": "lateral", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɭ": {
+      "ipa": "ɭ", "description": "voiced retroflex lateral approximant",
+      "manner": "lateral", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.3, "tongue_dorsal_shape": -0.8,
+      "tongue_tip": 2.0, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ʎ": {
+      "ipa": "ʎ", "description": "voiced palatal lateral approximant",
+      "manner": "lateral", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.8, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 0.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+
+    "ɹ": {
+      "ipa": "ɹ", "description": "voiced alveolar approximant",
+      "manner": "approximant", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.5, "tongue_dorsal_shape": -0.3,
+      "tongue_tip": 1.5, "lip_height": 0.0, "lip_protrusion": 0.3,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɻ": {
+      "ipa": "ɻ", "description": "voiced retroflex approximant",
+      "manner": "approximant", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.3, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 1.8, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "j": {
+      "ipa": "j", "description": "voiced palatal approximant",
+      "manner": "approximant", "voicing": true,
+      "jaw": -0.8, "tongue_dorsal_pos": 2.2, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 0.5, "lip_height": -0.3, "lip_protrusion": -0.5,
+      "larynx_height": 0.3, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "w": {
+      "ipa": "w", "description": "voiced labial-velar approximant",
+      "manner": "approximant", "voicing": true,
+      "jaw": -0.5, "tongue_dorsal_pos": -1.5, "tongue_dorsal_shape": 1.5,
+      "tongue_tip": -0.3, "lip_height": -1.0, "lip_protrusion": 2.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ʋ": {
+      "ipa": "ʋ", "description": "voiced labiodental approximant",
+      "manner": "approximant", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.0, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 0.0, "lip_height": -1.5, "lip_protrusion": -0.3,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+
+    "r": {
+      "ipa": "r", "description": "voiced alveolar trill",
+      "manner": "trill", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": -0.3,
+      "tongue_tip": 1.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ʀ": {
+      "ipa": "ʀ", "description": "voiced uvular trill",
+      "manner": "trill", "voicing": true,
+      "jaw": 0.0, "tongue_dorsal_pos": -1.0, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": -0.3, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": -0.3, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+
+    "ɾ": {
+      "ipa": "ɾ", "description": "voiced alveolar tap",
+      "manner": "tap", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": 0.0,
+      "tongue_tip": 2.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+    "ɽ": {
+      "ipa": "ɽ", "description": "voiced retroflex flap",
+      "manner": "tap", "voicing": true,
+      "jaw": -0.2, "tongue_dorsal_pos": 0.3, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.5, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": null, "noise_amplitude": 0.0,
+      "Rd": 1.0, "aspiration": 0.0
+    },
+
+    "ɬ": {
+      "ipa": "ɬ", "description": "voiceless alveolar lateral fricative",
+      "manner": "lateral_fricative", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.2, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 0.6,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "ɮ": {
+      "ipa": "ɮ", "description": "voiced alveolar lateral fricative",
+      "manner": "lateral_fricative", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 0.8, "tongue_dorsal_shape": -0.5,
+      "tongue_tip": 2.2, "lip_height": 0.0, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 0.3,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+
+    "tʃ": {
+      "ipa": "tʃ", "description": "voiceless postalveolar affricate",
+      "manner": "affricate", "voicing": false,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 2.5, "lip_height": -0.3, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 31, "noise_amplitude": 0.8,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "dʒ": {
+      "ipa": "dʒ", "description": "voiced postalveolar affricate",
+      "manner": "affricate", "voicing": true,
+      "jaw": -0.3, "tongue_dorsal_pos": 1.5, "tongue_dorsal_shape": 1.0,
+      "tongue_tip": 2.5, "lip_height": -0.3, "lip_protrusion": 0.5,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 31, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.1
+    },
+    "ts": {
+      "ipa": "ts", "description": "voiceless alveolar affricate",
+      "manner": "affricate", "voicing": false,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.2, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 2.8, "lip_height": -0.2, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 0.9,
+      "Rd": 0.3, "aspiration": 0.3
+    },
+    "dz": {
+      "ipa": "dz", "description": "voiced alveolar affricate",
+      "manner": "affricate", "voicing": true,
+      "jaw": -0.5, "tongue_dorsal_pos": 1.2, "tongue_dorsal_shape": 0.5,
+      "tongue_tip": 2.8, "lip_height": -0.2, "lip_protrusion": 0.0,
+      "larynx_height": 0.0, "velum": 0.0,
+      "noise_section": 34, "noise_amplitude": 0.4,
+      "Rd": 1.0, "aspiration": 0.1
+    }
+  }
+}

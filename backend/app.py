@@ -1,6 +1,6 @@
 """lotus-voice Flask application - AI Voice Generation Hub."""
 
-from api import ancient_bp, audiobook_bp, backends_bp, health_bp, synthesis_bp, voices_bp
+from api import ancient_bp, audiobook_bp, backends_bp, health_bp, synthesis_bp, vocaltract_bp, voices_bp
 from config import FLASK_DEBUG, FLASK_PORT
 from flask import Flask
 from flask_cors import CORS
@@ -17,6 +17,7 @@ def create_app() -> Flask:
     app.register_blueprint(voices_bp)
     app.register_blueprint(backends_bp)
     app.register_blueprint(ancient_bp)
+    app.register_blueprint(vocaltract_bp)
 
     return app
 
