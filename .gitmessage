@@ -1,0 +1,15 @@
+# <type>(<scope>): <subject>     (max 72 chars, present tense, no period)
+#
+# Types: feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert
+# Scopes: api|ui|db|mobile|tools|decks|skills|cards|auth|tests|docs|deps|ci|config|deploy
+#
+# ---- BLANK LINE ----
+#
+# WHY this change? What problem does it solve? (not what files changed)
+#
+# ---- BLANK LINE ----
+#
+# Refs: LEM-123                    (Linear issue, if applicable)
+# Migration: yes|no                (needs a database migration?)
+# Affected-apps: meta, cardwiki    (which apps does this touch?)
+# Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>

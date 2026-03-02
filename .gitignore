@@ -283,3 +283,6 @@ data/audiobooks/
 
 # Bark models cache
 .bark_models/
+
+# Generated WAV test files
+test_output/
