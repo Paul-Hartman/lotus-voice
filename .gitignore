@@ -286,3 +286,20 @@ data/audiobooks/
 
 # Generated WAV test files
 test_output/
+
+# Windows shell artifacts (> /dev/null creates literal files)
+nul
+NUL
+
+# UE5 / Unreal Engine
+Intermediate/
+Saved/
+DerivedDataCache/
+
+# Large binary exports (keep locally, don't push)
+*.obj
+*.bgeo
+*.bgeo.sc
+
+# Cached ML data
+**/face_cache/
