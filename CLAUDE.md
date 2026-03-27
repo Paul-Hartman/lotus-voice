@@ -1,5 +1,7 @@
 # lotus-voice
 
+> **MANDATORY: USE THE EVERYTHING DATABASE.** Do NOT create local databases or JSON data stores. ALL entities go into `hub/data/lotus.db` via API at `http://167.235.139.181/hub/api/lotus/` (no auth needed). Search before building, add cards as you work, use source `claude:session`. See root `CLAUDE.md` for full API reference. This is not optional.
+
 AI Voice Generation Hub for the Lotus Eater 2.0 ecosystem.
 
 ## Project Overview
